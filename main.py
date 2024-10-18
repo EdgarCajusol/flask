@@ -1,19 +1,22 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-
+CORS(app)  # Habilita CORS para todas las rutas
 # Ruta para el Webhook de 17Track
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    # Obtén los datos enviados por 17Track
-    data = request.get_json()
-    print(f"Datos recibidos del Webhook: {data}")
-
-    # Aquí puedes procesar los datos y guardarlos en tu base de datos
-    # Por ejemplo, podrías conectar con tu base de datos Railway y actualizar el estado del envío
-
-    return jsonify({'status': 'ok'}), 200
+    try:
+        data = request.get_json()
+        print(f"Datos recibidos del Webhook: {data}")
+        
+        # Procesar los datos y guardar en la base de datos
+        
+        return jsonify({'status': 'ok'}), 200
+    except Exception as e:
+        print(f"Error al procesar el webhook: {e}")
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 
 #if __name__ == '__main__':
