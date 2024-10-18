@@ -3,7 +3,7 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)  # Habilita CORS para todas las rutas
+
 # Ruta para el Webhook de 17Track
 @app.route('/webhook', methods=['POST'])
 def webhook():
