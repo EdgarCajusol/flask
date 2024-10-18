@@ -9,9 +9,18 @@ def webhook():
     try:
         data = request.get_json()
         print(f"Datos recibidos del Webhook: {data}")
-        
-        # Procesar los datos y guardar en la base de datos
-        
+
+        if not data:
+            return jsonify({'error': 'No data provided'}), 400
+
+        # Ejemplo de procesamiento: almacenar el estado en la base de datos
+        tracking_number = data.get('tracking_number')  # Asegúrate de que este campo exista
+        status = data.get('status')
+
+        # Aquí conectarías a tu base de datos y guardarías la información
+        # self.cursor.execute("INSERT INTO envios (tracking_number, status) VALUES (%s, %s)", (tracking_number, status))
+        # self.conn.commit()
+
         return jsonify({'status': 'ok'}), 200
     except Exception as e:
         print(f"Error al procesar el webhook: {e}")
